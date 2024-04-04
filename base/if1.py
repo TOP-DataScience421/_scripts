@@ -18,3 +18,12 @@
 #     <блок_n>
 #     ...
 
+
+word = input('введите слово: ')
+
+if len(word) > 6:
+    word = word.lower()
+    word2 = word.upper()
+    print(word, word2, sep=' | ')
+
+print('конец')
