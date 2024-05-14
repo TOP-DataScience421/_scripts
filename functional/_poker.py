@@ -32,7 +32,7 @@ def poker_comb(hand: Hand) -> str:
             return 'сет'
     
     min_card = min(unique_cards)
-    if sorted(hand) == range(min_card, min_card+5):
+    if sorted(hand) == list(range(min_card, min_card+5)):
         return 'стрит'
     
     if unique_len == 2:
@@ -50,11 +50,13 @@ def poker_comb(hand: Hand) -> str:
 # >>>
 # >>> poker_comb([2, 2, 6, 8, 10])
 # 'пара'
+# >>>
 # >>> poker_comb([2, 2, 6, 6, 10])
 # 'две пары'
 # >>>
 # >>> poker_comb([2, 2, 2, 6, 10])
 # 'сет'
+# >>>
 # >>> poker_comb([2, 2, 2, 6, 6])
 # 'фулл-хаус'
 # >>>
