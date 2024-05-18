@@ -12,9 +12,6 @@ first_char =  char_digits | {'-'}
 def is_intable(number: str) -> bool:
     return set(number[:2]) <= first_char and set(number[2:]) <= char_digits
 
->>> filter_user(is_intable, ['24', '-15', '2', '2 2', '14'])
-['24', '-15', '2', '14']
-
 
 # >>> filter_user(is_intable, ['24', '-15', '2', '2 2', '14'])
 # ['24', '-15', '2', '14']
