@@ -1,0 +1,46 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 1.25
+
+class Person {
+    +last_name: <i>str</i>
+    +first_name: <i>str</i>
+    +patr_name: <i>str</i>
+}
+
+class Student {
+    +year: <i>int</i>
+}
+
+class CatalogueCard {
+    +title: <i>str</i>
+    +year: <i>int</i>
+}
+
+class BookCard {
+    +authors: <i>tuple</i> [Person, ...]
+}
+
+class CompendiumCard
+
+abstract dict
+
+class Printable {
+    +print() → <i>None</i>
+}
+
+hide class empty members
+hide abstract empty members
+
+Person <|-- Student
+
+CatalogueCard <|-- BookCard
+CatalogueCard <|-- CompendiumCard
+
+dict <|-- CompendiumCard
+
+Printable <|-up- Student
+Printable <|-up- CompendiumCard
+
+@enduml
