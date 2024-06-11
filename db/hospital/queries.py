@@ -47,3 +47,22 @@ ins_vacations = (
     '  (%s, %s, %s)'
 )
 
+sel_deps_wards = (
+    '  select d.name as department,'
+    '         w.name as ward       '
+    '    from departments as d     '
+    '    join wards as w           '
+    '      on d.id = dep_id        '
+    'order by d.id, w.id;          '
+)
+sel_doctors_specs = '''
+  select concat_ws(' ', last_name, first_name, patr_name) as full_name,
+         s.name as spec
+    from doctors as d
+    join doctors_specs as ds
+      on d.id = doctor_id
+    join specializations as s
+      on spec_id = s.id
+order by full_name;
+'''
+
