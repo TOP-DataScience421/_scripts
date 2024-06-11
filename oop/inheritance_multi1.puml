@@ -1,0 +1,32 @@
+@startuml
+
+!theme monokai_npp from ..\.styles
+scale 2
+
+class A {
+    +attr = <font size=12><font "Hack">'атрибут класса A'</font>
+}
+
+class B {
+    +attr = <font size=12><font "Hack">'атрибут класса B'</font>
+}
+
+class C
+class D
+
+skinparam linetype ortho
+hide class empty members
+
+C -up-|> "1" A
+C -up-|> "2" B
+
+D -up--|> "1" B
+D -up--|> "2" A
+
+A -[hidden]right- s
+s -[hidden]right- B
+class s
+s -- C
+hide s
+
+@enduml
