@@ -86,3 +86,27 @@ from
 group by
   "days";
 '''
+
+sel_doctors_specs_full = '''
+   select last_name || ' ' || first_name || ' ' || patr_name as full_name,
+          s.name as spec
+     from doctors as d
+full join doctors_specs 
+       on d.id = doctor_id
+full join specializations as s 
+       on spec_id = s.id 
+ order by full_name;
+'''
+sel_full_specs_cnt = '''
+   select case when s.name is not null then s.name
+               else 'Младший мед.персонал'
+          end as spec,
+          count(d.id) as "total people"
+     from doctors as d
+full join doctors_specs 
+       on d.id = doctor_id
+full join specializations as s 
+       on spec_id = s.id 
+ group by "spec"
+ order by "total people" desc;
+'''
