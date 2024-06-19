@@ -10,7 +10,7 @@ import generate
 import queries
 
 
-config_path = Path(path[1]) / 'config.json'
+config_path = Path(path[1]) / 'config_mysql.json'
 config = json_loads(config_path.read_text())
 
 connection = connect(**config, autocommit=True)
