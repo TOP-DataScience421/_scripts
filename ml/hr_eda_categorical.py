@@ -1,6 +1,7 @@
 from pandas import (
     read_csv,
     Categorical,
+    crosstab,
 )
 
 from itertools import count
