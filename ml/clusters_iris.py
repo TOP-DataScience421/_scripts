@@ -3,6 +3,12 @@ from numpy import array
 from pandas import DataFrame
 from sklearn.cluster import KMeans
 from sklearn.datasets import load_iris
+from sklearn.metrics import (
+    homogeneity_score,
+    completeness_score,
+    v_measure_score,
+    silhouette_score,
+)
 
 
 fig = plt.figure(figsize=(20, 12), layout='tight')
@@ -29,6 +35,19 @@ results = DataFrame(
 )
 results['правильно'] = (raw['target'] == y_pred)
 print(results['правильно'].value_counts(normalize=True).round(2))
+
+homogeneity = homogeneity_score(raw['target'], y_pred)
+completeness = completeness_score(raw['target'], y_pred)
+v_measure = v_measure_score(raw['target'], y_pred)
+silhouette = silhouette_score(data, y_pred)
+print(
+    ''
+    f'{homogeneity = :.2f}',
+    f'{completeness = :.2f}',
+    f'{v_measure = :.2f}',
+    f'{silhouette = :.2f}',
+    sep='\n'
+)
 
 
 axs[0][0].scatter(data.iloc[:, 0], data.iloc[:, 1], c=raw['target'], cmap='Paired')
