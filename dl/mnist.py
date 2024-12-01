@@ -1,3 +1,8 @@
+from keras.layers import Dense, Input
+from keras.losses import CategoricalCrossentropy
+from keras.metrics import CategoricalAccuracy
+from keras.models import Sequential
+from keras.optimizers import Adam
 from keras.utils import to_categorical
 
 from numpy import load as np_load
@@ -51,4 +56,36 @@ x_test = x_test / 255
 #   9 -> [0 0 0 0 0 0 0 0 0 1]
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
+
+
+# конструирование искусственной нейронной сети
+model = Sequential(name='handwritten_digits_recognition')
+model.add(Input(shape=(784,)))
+model.add(Dense(units=400, activation='relu'))
+model.add(Dense(units=200, activation='relu'))
+model.add(Dense(units=10, activation='softmax'))
+
+# >>> model.summary()
+# Model: "handwritten_digits_recognition"
+# ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━━┓
+# ┃ Layer (type)                         ┃ Output Shape                ┃         Param # ┃
+# ┡━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━━┩
+# │ dense (Dense)                        │ (None, 400)                 │         314,000 │
+# ├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+# │ dense_1 (Dense)                      │ (None, 200)                 │          80,200 │
+# ├──────────────────────────────────────┼─────────────────────────────┼─────────────────┤
+# │ dense_2 (Dense)                      │ (None, 10)                  │           2,010 │
+# └──────────────────────────────────────┴─────────────────────────────┴─────────────────┘
+#  Total params: 396,210 (1.51 MB)
+#  Trainable params: 396,210 (1.51 MB)
+#  Non-trainable params: 0 (0.00 B)
+
+# конфигурирование искусственной нейронной сети
+model.compile(
+    loss=CategoricalCrossentropy(),
+    optimizer=Adam(),
+    metrics=[
+        CategoricalAccuracy(name='accuracy'),
+    ],
+)
 
