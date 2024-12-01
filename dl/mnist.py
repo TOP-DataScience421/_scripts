@@ -89,3 +89,42 @@ model.compile(
     ],
 )
 
+
+epochs = 15
+
+print('\n ОБУЧЕНИЕ \n')
+# обучение (предварительное) искусственной нейронной сети
+training_results = model.fit(
+    x_train,
+    y_train,
+    batch_size=128,
+    epochs=epochs,
+    validation_split=0.1,
+    verbose=2,
+)
+
+print('\n ТЕСТИРОВАНИЕ \n')
+# оценка эффективности обучения
+scores = model.evaluate(
+    x_test,
+    y_test,
+    batch_size=128,
+    verbose=2,
+    return_dict=True,
+)
+
+fig = plt.figure(figsize=(12, 5))
+axs = fig.subplots(1, 2)
+
+axs[0].plot(training_results.history['loss'], label='loss')
+axs[0].plot(training_results.history['val_loss'], label='val_loss')
+axs[0].scatter(epochs, scores['loss'], s=50, c='r', label='test_loss')
+axs[0].legend()
+
+axs[1].plot(training_results.history['accuracy'], label='accuracy')
+axs[1].plot(training_results.history['val_accuracy'], label='val_accuracy')
+axs[1].scatter(epochs, scores['accuracy'], s=50, c='r', label='test_accuracy')
+axs[1].legend()
+
+plt.show()
+
