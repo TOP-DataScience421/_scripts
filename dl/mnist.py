@@ -113,18 +113,46 @@ scores = model.evaluate(
     return_dict=True,
 )
 
-fig = plt.figure(figsize=(12, 5))
-axs = fig.subplots(1, 2)
+# fig = plt.figure(figsize=(12, 5))
+# axs = fig.subplots(1, 2)
 
-axs[0].plot(training_results.history['loss'], label='loss')
-axs[0].plot(training_results.history['val_loss'], label='val_loss')
-axs[0].scatter(epochs, scores['loss'], s=50, c='r', label='test_loss')
-axs[0].legend()
+# axs[0].plot(training_results.history['loss'], label='loss')
+# axs[0].plot(training_results.history['val_loss'], label='val_loss')
+# axs[0].scatter(epochs, scores['loss'], s=50, c='r', label='test_loss')
+# axs[0].legend()
 
-axs[1].plot(training_results.history['accuracy'], label='accuracy')
-axs[1].plot(training_results.history['val_accuracy'], label='val_accuracy')
-axs[1].scatter(epochs, scores['accuracy'], s=50, c='r', label='test_accuracy')
-axs[1].legend()
+# axs[1].plot(training_results.history['accuracy'], label='accuracy')
+# axs[1].plot(training_results.history['val_accuracy'], label='val_accuracy')
+# axs[1].scatter(epochs, scores['accuracy'], s=50, c='r', label='test_accuracy')
+# axs[1].legend()
 
-plt.show()
+# plt.show()
+
+
+from numpy import array
+from PIL import Image
+
+
+dir_path = Path(path[0]) / 'test/28'
+images = [
+    Image.open(img_path)
+    for img_path in dir_path.iterdir()
+]
+
+digits_imgs_2 = [[[0]*28 for _ in range(28)] for _ in range(len(images))]
+
+for i in range(len(images)):
+    for y in range(28):
+        for x in range(28):
+            r, g, b, _ = images[i].load()[x,y]
+            lum = (r + g + b) / 3
+            digits_imgs_2[i][y][x] = round(lum)
+
+digits_imgs_2 = array(digits_imgs_2)
+
+x_test_2 = digits_imgs_2.reshape(len(images), 784)
+x_test_2 = x_test_2 / 255
+
+y_test_2 = array([0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 4, 8])
+y_test_2 = to_categorical(y_test_2, 10)
 
