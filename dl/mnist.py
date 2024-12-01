@@ -1,0 +1,54 @@
+from keras.utils import to_categorical
+
+from numpy import load as np_load
+
+from pathlib import Path
+from sys import path
+
+
+digits_imgs = np_load(Path(path[0]) / 'mnist.npz')
+
+x_train = digits_imgs['x_train']
+y_train = digits_imgs['y_train']
+x_test = digits_imgs['x_test']
+y_test = digits_imgs['y_test']
+
+# >>> x_train.shape
+# (60000, 28, 28)
+# >>>
+# >>> y_train.shape
+# (60000,)
+# >>>
+# >>> x_test.shape
+# (10000, 28, 28)
+# >>>
+# >>> y_test.shape
+# (10000,)
+
+# print(y_train[2])
+# plt.imshow(x_train[2], cmap='gray')
+# plt.show()
+
+
+# понижение ранга тензора без потери данных
+x_train = x_train.reshape(60000, 784)
+x_test = x_test.reshape(10000, 784)
+
+# масштабирование данных
+x_train = x_train / 255
+x_test = x_test / 255
+
+# one hot encoding
+#   0 -> [1 0 0 0 0 0 0 0 0 0]
+#   1 -> [0 1 0 0 0 0 0 0 0 0]
+#   2 -> [0 0 1 0 0 0 0 0 0 0]
+#   3 -> [0 0 0 1 0 0 0 0 0 0]
+#   4 -> [0 0 0 0 1 0 0 0 0 0]
+#   5 -> [0 0 0 0 0 1 0 0 0 0]
+#   6 -> [0 0 0 0 0 0 1 0 0 0]
+#   7 -> [0 0 0 0 0 0 0 1 0 0]
+#   8 -> [0 0 0 0 0 0 0 0 1 0]
+#   9 -> [0 0 0 0 0 0 0 0 0 1]
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
